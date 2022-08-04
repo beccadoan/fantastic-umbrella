@@ -17,7 +17,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  User.findOne({
+  Category.findOne({
       where: {
           id: req.params.id
       },
@@ -27,12 +27,12 @@ router.get('/:id', (req, res) => {
           }
       ]
   })
-  .then(dbUserData => {
-      if (!dbUserData){
-          res.status(404).json({ message: 'No product found with this id' })
+  .then(dbCategoryData => {
+      if (!dbCategoryData){
+          res.status(404).json({ message: 'No category found with this id' })
           return;
       }
-      res.json(dbUserData)
+      res.json(dbCategoryData)
   })
   .catch(err => {
       console.log(err);
@@ -42,7 +42,12 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   Category.create({
-    category_name: req.body.category_name
+    category_name: req.body.categoryName
+  })
+  .then(dbCategoryData => res.json(dbCategoryData))
+  .catch(err => {
+    console.log(err);
+    res.json(err)
   })
 });
 
